@@ -4,18 +4,18 @@
     api-level="23"
     density="xhdpi"
     format="7"
-    timestamp="174416474963000"
+    timestamp="175938142370959"
     token="-3812740555259977275" >
 
     <task
         name="javac"
-        duration="271" />
+        duration="263" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="36" />
+        duration="32" />
     <task
         name="verifier"
         duration="7" />
@@ -48,7 +48,7 @@
             location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\res\resources-debug.ap_"
             type="RESOURCES" />
     </build>
-    <build timestamp="174416474963000" >
+    <build timestamp="175938142370959" >
         <artifact
             location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
             type="DEX" />
