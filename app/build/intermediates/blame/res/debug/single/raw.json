@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\raw\\crate_hit1.wav",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\raw\\crate_hit1.wav"
+    },
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\raw\\crate_destroy1.wav",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\raw\\crate_destroy1.wav"
+    },
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\raw\\star_hit.wav",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\raw\\star_hit.wav"
+    },
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\raw\\crate_hit2.wav",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\raw\\crate_hit2.wav"
+    },
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\raw\\crate_destroy2.wav",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\raw\\crate_destroy2.wav"
+    }
+]
