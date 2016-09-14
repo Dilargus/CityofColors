@@ -357,7 +357,8 @@ public class OnClickHelper {
         protected void onPostExecute(ClickResult result) {
             if(result.hit != null){
                 GLBuilding glb = (GLBuilding) result.hit;
-                act.showPopup(act,new Point(Math.round((result.intpoint[0]/(-result.intpoint[2])+0.413f)*(float)act.mGLView.getHeight()/0.826f),Math.round((result.intpoint[1]/(result.intpoint[2])+0.59f)*(float)act.mGLView.getWidth()/1.18f)),glb.my_building);
+                //act.showPopup(act,new Point(Math.round((result.intpoint[0]/(-result.intpoint[2])+0.413f)*(float)act.mGLView.getHeight()/0.826f),Math.round((result.intpoint[1]/(result.intpoint[2])+0.59f)*(float)act.mGLView.getWidth()/1.18f)),glb.my_building);
+                act.showBuildingPopup(glb.my_building);
             }
         }
 

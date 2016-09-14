@@ -86,6 +86,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -107,7 +109,7 @@ public class OpenGLES20Activity extends Activity {
 
     protected AlertDialog gps_alert;
     protected AlertDialog game_menu;
-
+    protected AlertDialog building_popup;
     protected MyGLSurfaceView mGLView;
 
     protected RecyclerView recyclerView;
@@ -455,7 +457,7 @@ public class OpenGLES20Activity extends Activity {
     }
 
 
-    protected void showPopup(final Activity context, Point p, Building building) {
+    /*protected void showPopup(final Activity context, Point p, Building building) {
         int popupWidth = 250;
         int popupHeight = 180;
 
@@ -491,27 +493,11 @@ public class OpenGLES20Activity extends Activity {
         }
         // Displaying the popup at the specified location, + offsets.
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.y, p.x);
-        /*popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                thing_clicked = true;
-            }
-        });*/
+
         TextView red_text = (TextView) layout.findViewById(R.id.building_red_number);
         TextView green_text = (TextView) layout.findViewById(R.id.building_green_number);
         TextView blue_text = (TextView) layout.findViewById(R.id.building_blue_number);
 
-    /*ImageView iv_r = (ImageView)layout.findViewById(R.id.building_red);
-    GradientDrawable red_circle = (GradientDrawable)iv_r.getDrawable();
-    red_circle.setColor(Color.argb(255, 255, 0, 0));
-
-    ImageView iv_g = (ImageView)layout.findViewById(R.id.building_green);
-    GradientDrawable green_circle = (GradientDrawable)iv_g.getDrawable();
-    green_circle.setColor(Color.argb(255, 0, 255, 0));
-
-    ImageView iv_b = (ImageView)layout.findViewById(R.id.building_blue);
-    GradientDrawable blue_circle = (GradientDrawable)iv_b.getDrawable();
-    blue_circle.setColor(Color.argb(255, 0, 0, 255));*/
 
         red_text.setText(String.format("%02d", Math.round(building.r * 100)));
         green_text.setText(String.format("%02d", Math.round(building.g * 100)));
@@ -527,7 +513,7 @@ public class OpenGLES20Activity extends Activity {
             }
         });
 
-    }
+    }*/
 
     public void logOut(View v){
         session.setLogin(false);
@@ -547,6 +533,61 @@ public class OpenGLES20Activity extends Activity {
         builder.setView(dialoglayout);
         game_menu = builder.create();
         game_menu.show();
+    }
+
+    public void showBuildingPopup(Building building){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialoglayout = inflater.inflate(R.layout.building_popup, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialoglayout);
+
+        TextView red_text = (TextView) dialoglayout.findViewById(R.id.building_red_number);
+        TextView green_text = (TextView) dialoglayout.findViewById(R.id.building_green_number);
+        TextView blue_text = (TextView) dialoglayout.findViewById(R.id.building_blue_number);
+        int b_r = Math.round(building.r * 100);
+        int b_g = Math.round(building.g * 100);
+        int b_b = Math.round(building.b * 100);
+        red_text.setText(String.format("%02d", b_r ));
+        green_text.setText(String.format("%02d", b_g));
+        blue_text.setText(String.format("%02d", b_b));
+
+
+        TextView red_dif = (TextView) dialoglayout.findViewById(R.id.building_red_dif);
+        TextView green_dif = (TextView) dialoglayout.findViewById(R.id.building_green_dif);
+        TextView blue_dif = (TextView) dialoglayout.findViewById(R.id.building_blue_dif);
+
+        int r = Integer.valueOf( SessionData.instance().hex_color.substring( 2, 4 ), 16 )*100/255;
+        int g = Integer.valueOf( SessionData.instance().hex_color.substring( 4, 6 ), 16 )*100/255;
+        int b = Integer.valueOf( SessionData.instance().hex_color.substring( 6, 8 ), 16 )*100/255;
+        NumberFormat plusMinusNF = new DecimalFormat("+#00;-#00");
+        red_dif.setText(plusMinusNF.format(calcMinDif(b_r,r)));
+        green_dif.setText(plusMinusNF.format(calcMinDif(b_g, g)));
+        blue_dif.setText(plusMinusNF.format(calcMinDif(b_b, b)));
+
+        // Getting a reference to Close button, and close the popup when clicked.
+        Button close = (Button) dialoglayout.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                building_popup.dismiss();
+            }
+        });
+        building_popup = builder.create();
+        building_popup.show();
+    }
+
+    protected int calcMinDif(int col, int col2){
+        int dif1 = (col-col2)%100;
+        int dif2 = (col+col2)%100;
+        int dif;
+        if(Math.abs(dif1)>Math.abs(dif2)){
+            dif = dif2;
+        }
+        else{
+            dif = dif1;
+        }
+        return dif;
     }
 
     public void showInventory(View v){

@@ -4,32 +4,51 @@
     api-level="23"
     density="xhdpi"
     format="7"
-    timestamp="164920497518617"
+    timestamp="174416474963000"
     token="-3812740555259977275" >
 
     <task
         name="javac"
-        duration="656" />
+        duration="271" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="92" />
+        duration="36" />
     <task
         name="verifier"
-        duration="12" />
+        duration="7" />
 
     <artifact
         location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
         type="DEX" />
 
-    <build timestamp="162471217506955" >
+    <build timestamp="169737344028568" >
         <artifact
             location="C:\Users\Woess\HelloOpenGLES20\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
-    <build timestamp="164920497518617" >
+    <build timestamp="171494146247085" >
+        <artifact
+            location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_5\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_2\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="171924404495823" >
+        <artifact
+            location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\res\resources-debug.ap_"
+            type="RESOURCES" />
+    </build>
+    <build timestamp="174416474963000" >
         <artifact
             location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
             type="DEX" />

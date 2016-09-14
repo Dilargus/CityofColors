@@ -68,9 +68,9 @@ public class RegisterActivity extends Activity {
                 Log.i("Color", "show color " + color);
 
                 hex_color = String.format("%08x", color);
-                r = Integer.valueOf( hex_color.substring( 2, 4 ), 16 );
-                g = Integer.valueOf( hex_color.substring( 4, 6 ), 16 );
-                b = Integer.valueOf( hex_color.substring( 6, 8 ), 16 );
+                r = Integer.valueOf( hex_color.substring( 2, 4 ), 16 )*100/255;
+                g = Integer.valueOf( hex_color.substring( 4, 6 ), 16 )*100/255;
+                b = Integer.valueOf( hex_color.substring( 6, 8 ), 16 )*100/255;
                 btnChooseColor.setBackgroundColor(color);
                 btnChooseColor.setText("Click to change current player color:" + System.getProperty("line.separator") +
                         "R: " + r + System.getProperty("line.separator") +
