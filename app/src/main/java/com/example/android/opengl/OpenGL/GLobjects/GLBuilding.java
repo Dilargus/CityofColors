@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 import android.util.Log;
 
 import com.example.android.opengl.OSM.Building;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.MyGLRenderer;
 import com.example.android.opengl.OSM.Node;
 import com.example.android.opengl.SessionData;
@@ -24,7 +25,7 @@ public class GLBuilding extends  GLObject{
     private float[] tex_coords;
     public Building my_building;
 
-    private final String building_vertex_shader =
+    /*private final String building_vertex_shader =
                       "uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
                     + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.
                     + "uniform vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
@@ -65,9 +66,10 @@ public class GLBuilding extends  GLObject{
                     + "	  vec4 text = texture2D(s_texture, f_texCoord); \n"
      //               + "	  vec4 col = v_Color  \n"
                     + "   gl_FragColor = vec4(v_Color[0]*text.r * diffuse,v_Color[1]*text.g * diffuse,v_Color[2]*text.b * diffuse, u_Alpha);     \n"		// Pass the color directly through the pipeline.
-                    + "}                              \n";
+                    + "}                              \n";*/
 
     public GLBuilding(Building my_building, float[] vertices, float[]tex_coords, float[] normals, LatLng relativePoint) {
+        super(null);
         this.my_building = my_building;
         // initialize vertex byte buffer for shape coordinates
         this.relativePoint = relativePoint;
@@ -109,7 +111,7 @@ public class GLBuilding extends  GLObject{
         makeBufferReady();
 
         // prepare shaders and OpenGL program
-        vertexShader = MyGLRenderer.loadShader(
+        /*vertexShader = MyGLRenderer.loadShader(
                 GLES20.GL_VERTEX_SHADER, building_vertex_shader);
         fragmentShader = MyGLRenderer.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, building_fragment_shader);
@@ -117,14 +119,15 @@ public class GLBuilding extends  GLObject{
         mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
         GLES20.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
         GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
+        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables*/
 
         alpha = 1.0f;
         light_pos = new float[]{0.0f, 0.0f, 4.0f, 1.0f};
         mMVMatrix = new float[16];
         mVPMatrix = new float[16];
+        light_strength = 10.0f;
+        //initLocations();
         isInit=true;
-
     }
 
     public void draw(float[] vMatrix, float[] pMatrix, int texture_nr, LatLng current) {

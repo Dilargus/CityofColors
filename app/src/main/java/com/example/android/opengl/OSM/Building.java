@@ -17,6 +17,8 @@ public class Building  implements java.io.Serializable  {
 	private long id;
 	private String name;
 	public  Float height = 0.0f;
+	public float area= 0.0f;
+	public int cost = 0;
 	public static final float[] BUILDING_CLICKED = new float[] {1.0f,1.0f,1.0f,1.0f};
 
 	public Building(long id) {
@@ -63,7 +65,7 @@ public class Building  implements java.io.Serializable  {
 		double cx = 0.0, cy = 0.0;
 		int i, j;
 		double A = PolygonArea();
-
+		area = (float) A*1000000000;
 
 		double factor = 0;
 

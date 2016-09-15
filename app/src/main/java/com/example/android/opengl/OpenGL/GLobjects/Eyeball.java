@@ -4,6 +4,7 @@ import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Building;
 import com.example.android.opengl.OSM.Node;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.SessionData;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,7 +17,8 @@ public class Eyeball extends GLObject {
     private double biggest_long = 0.0f;
     private final float SCALE_FACTOR = 0.005f;
     private int counter = 0;
-    public Eyeball(float[] coords, float[] uvs) {
+    public Eyeball(StandardShader ss,float[] coords, float[] uvs) {
+        super(ss);
         gl_coords = new float[coords.length];
         float factor = centrified(coords,0);
         for(int i=0; i<coords.length;i=i+3){

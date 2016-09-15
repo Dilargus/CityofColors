@@ -429,6 +429,9 @@ public class OpenGLES20Activity extends Activity {
     }
 
     private void lowPassGPS(float accuracy, int percent, LatLng current_location) {
+        /*if(SessionData.instance().old_location!=null) {
+            current_location = new LatLng(SessionData.instance().old_location.latitude + 0.001, SessionData.instance().old_location.longitude + 0.001);
+        }*/
         if (SessionData.instance().old_location != null) {
             LatLng last_save = new LatLng(SessionData.instance().approx_location.latitude, SessionData.instance().approx_location.longitude);
             float value = percent / 100.0f;
@@ -440,6 +443,7 @@ public class OpenGLES20Activity extends Activity {
             SessionData.instance().old_location = SessionData.instance().approx_location;
             SessionData.instance().approx_location = new LatLng(current_location.latitude, current_location.longitude);
         } else {
+            SessionData.instance().old_location = SessionData.instance().approx_location;
             SessionData.instance().approx_location = new LatLng(current_location.latitude, current_location.longitude);
             mGLView.getRenderer().current_gl_location = SessionData.instance().approx_location;
             mGLView.getRenderer().start = SessionData.instance().approx_location;
@@ -559,16 +563,21 @@ public class OpenGLES20Activity extends Activity {
         int r = Integer.valueOf( SessionData.instance().hex_color.substring( 2, 4 ), 16 )*100/255;
         int g = Integer.valueOf( SessionData.instance().hex_color.substring( 4, 6 ), 16 )*100/255;
         int b = Integer.valueOf( SessionData.instance().hex_color.substring( 6, 8 ), 16 )*100/255;
-        int r_dif = calcMinDif(b_r,r);
-        int g_dif = calcMinDif(b_g,g);
-        int b_dif = calcMinDif(b_b,b);
-        Log.i("COLORS", r + " " + b_r + " " + r_dif);
-        Log.i("COLORS", g + " " + b_g + " " + g_dif);
-        Log.i("COLORS", b + " " + b_b + " " + b_dif);
+        int r_dif = SessionData.instance().calcMinDif(b_r,r);
+        int g_dif = SessionData.instance().calcMinDif(b_g,g);
+        int b_dif = SessionData.instance().calcMinDif(b_b,b);
+        Log.i("COLORS", building.area+"");
         NumberFormat plusMinusNF = new DecimalFormat("+#00;-#00");
         red_dif.setText(plusMinusNF.format(r_dif));
         green_dif.setText(plusMinusNF.format(g_dif));
         blue_dif.setText(plusMinusNF.format(b_dif));
+
+        TextView corners = (TextView) dialoglayout.findViewById(R.id.building_corners);
+        corners.setText(String.valueOf(building.getNodes().size()));
+        TextView area = (TextView) dialoglayout.findViewById(R.id.building_area);
+        area.setText(String.valueOf((int)(building.area)));
+        TextView cost = (TextView) dialoglayout.findViewById(R.id.building_star_cost);
+        cost.setText(String.valueOf(building.cost));
 
         // Getting a reference to Close button, and close the popup when clicked.
         Button close = (Button) dialoglayout.findViewById(R.id.close);
@@ -583,18 +592,7 @@ public class OpenGLES20Activity extends Activity {
         building_popup.show();
     }
 
-    protected int calcMinDif(int col, int col2){
-        int dif1 = (col+100-col2)%100;
-        int dif2 = (col2+100-col)%100;
-        int dif;
-        if(Math.abs(dif1)>Math.abs(dif2)){
-            dif = dif2;
-        }
-        else{
-            dif = dif1*(-1);
-        }
-        return dif;
-    }
+
 
     public void showInventory(View v){
         if(inventory_visible){

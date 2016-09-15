@@ -18,26 +18,113 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp" />
 -->
-
+    <TextView
+        android:id="@+id/building_title"
+        android:layout_width="fill_parent"
+        android:layout_height="25dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_margin="3dp"
+        android:textSize="20sp"
+        android:text="Building Properties"
+        android:textColor="#ffffff"
+        android:gravity="center_horizontal"
+        android:background="@drawable/black_shape"
+        />
 
     <TextView
         android:id="@+id/color_title"
-        android:layout_width="match_parent"
+        android:layout_width="96dp"
         android:layout_height="25dp"
-        android:layout_margin="3dp"
-        android:textSize="20sp"
-        android:text="Color"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/black_shape"
-        />
-    <TextView
-        android:id="@+id/building_red_number"
         android:layout_marginTop="28dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:layout_gravity="left|top"
+        android:textSize="15sp"
+        android:text="Color"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/black_shape"
+        />
+    <TextView
+        android:id="@+id/corners_title"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginLeft="102dp"
+        android:layout_marginRight="3dp"
+        android:textSize="15sp"
+        android:text="Corners"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/black_shape"
+        />
+    <TextView
+        android:id="@+id/building_corners"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginRight="3dp"
+        android:textColor="#ffffff"
+        android:text="00"
+        android:background="@drawable/black_shape"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/area_title"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginLeft="201dp"
+        android:layout_marginRight="3dp"
+        android:textSize="15sp"
+        android:text="Area"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/black_shape"
+        />
+    <TextView
+        android:id="@+id/cost_title"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginLeft="102dp"
+        android:layout_marginRight="3dp"
+        android:textSize="15sp"
+        android:text="Cost:"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/black_shape"
+        />
+    <TextView
+        android:id="@+id/building_star_cost"
+        android:layout_marginTop="94dp"
+        android:layout_marginLeft="224dp"
+        android:layout_marginRight="3dp"
+        android:textColor="#000000"
+        android:text="00"
+        android:background="@drawable/star_item"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/building_area"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="234dp"
+        android:layout_marginRight="3dp"
+        android:textColor="#ffffff"
+        android:text="00"
+        android:background="@drawable/black_shape"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/building_red_number"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:textColor="#000000"
         android:text="00"
         android:background="@drawable/red_shape"
@@ -47,10 +134,9 @@
         />
     <TextView
         android:id="@+id/building_green_number"
-        android:layout_marginTop="28dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginRight="3dp"
-        android:layout_gravity="center|top"
         android:textColor="#000000"
         android:text="00"
         android:background="@drawable/green_shape"
@@ -61,10 +147,9 @@
 
     <TextView
         android:id="@+id/building_blue_number"
-        android:layout_marginTop="28dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="69dp"
         android:layout_marginRight="3dp"
-        android:layout_gravity="right|top"
         android:textColor="#000000"
         android:text="00"
         android:background="@drawable/blue_shape"
@@ -75,19 +160,20 @@
 
     <TextView
         android:id="@+id/difference"
-        android:layout_width="match_parent"
+        android:layout_width="96dp"
         android:layout_height="25dp"
-        android:layout_marginTop="63dp"
-        android:textSize="20sp"
+        android:layout_marginTop="91dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:textSize="15sp"
         android:text="Difference"
         android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/black_shape"
+        android:gravity="center"
         />
     <TextView
         android:id="@+id/building_red_dif"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="119dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
 
@@ -101,10 +187,9 @@
         />
     <TextView
         android:id="@+id/building_green_dif"
-        android:layout_marginTop="88dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginTop="119dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginRight="3dp"
-        android:layout_gravity="center_horizontal"
         android:textColor="#000000"
         android:text="00"
         android:background="@drawable/green_shape"
@@ -115,10 +200,9 @@
 
     <TextView
         android:id="@+id/building_blue_dif"
-        android:layout_marginTop="88dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginTop="119dp"
+        android:layout_marginLeft="69dp"
         android:layout_marginRight="3dp"
-        android:layout_gravity="right"
         android:textColor="#000000"
         android:text="00"
         android:background="@drawable/blue_shape"
@@ -148,9 +232,9 @@
         android:padding="5dip"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:layout_marginTop="121dp"
+        android:layout_marginTop="152dp"
 
-        android:text="Buy: "
+        android:text="Buy"
         android:layout_gravity="center_horizontal" />
         <Button
             android:id="@+id/close"
@@ -164,7 +248,7 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:padding="5dip"
-            android:layout_marginTop="154dp"
+            android:layout_marginTop="185dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:layout_marginBottom="3dp"

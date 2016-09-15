@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Building;
 import com.example.android.opengl.OSM.Node;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.MyGLRenderer;
 import com.example.android.opengl.SessionData;
 import com.example.android.opengl.Vector;
@@ -27,16 +28,17 @@ public class GLObject {
     protected FloatBuffer vertexBuffer;
     protected FloatBuffer textureBuffer;
     protected FloatBuffer normalBuffer;
-    protected int mProgram;
+    //protected int mProgram;
     protected boolean isInit = false;
     protected boolean once = true;
     protected float[] light_pos;
     protected float[] gl_coords;
     protected float[] gl_normals;
     protected float[] gl_tex_coords;
-    protected int mTexHandle;
+    public StandardShader ss = null;
     protected float alpha;
-    protected int vertexShader;
+    protected float light_strength;
+    /*protected int vertexShader;
     protected int fragmentShader;
     protected int mPositionHandle;
     protected int mColorHandle;
@@ -44,11 +46,13 @@ public class GLObject {
     protected int mLightHandle;
     protected int mNormalHandle;
     protected int mTextureUniformHandle;
+    protected int mAlphaHandle;
+    protected int mMMatrixHandle;
+    protected int mTexHandle;*/
     public float mPositionX;
     public float mPositionY;
     public float mPositionZ;
-    protected int mAlphaHandle;
-    protected int mMMatrixHandle;
+
     public ArrayList<Node> corners = new ArrayList<>();
     float color[];
     protected float[] mVPMatrix;
@@ -59,7 +63,7 @@ public class GLObject {
     static final int vertexStride = COORDS_PER_VERTEX * 4;
     public LatLng relativePoint;
     protected int vertexCount;
-    protected String vertex_shader =
+    /*protected String vertex_shader =
             "uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
                     + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.
                     + "uniform vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
@@ -101,11 +105,11 @@ public class GLObject {
                     //               + "	  vec4 col = v_Color  \n"
                     //             + "   gl_FragColor = vec4(v_Color[0]* diffuse * 10.0,v_Color[1]* diffuse * 10.0,v_Color[2]* diffuse * 10.0, u_Alpha);     \n"
                     + "   gl_FragColor = vec4(v_Color[0]*text.r * diffuse,v_Color[1]*text.g * diffuse ,v_Color[2]*text.b * diffuse, u_Alpha);     \n"		// Pass the color directly through the pipeline.
-                    + "}                              \n";
+                    + "}                              \n";*/
 
 
-    public GLObject() {
-
+    public GLObject(StandardShader ss) {
+        this.ss = ss;
     }
 
     public Date getCreationTime() {
@@ -154,15 +158,15 @@ public class GLObject {
        makeBufferReady();
 
         // prepare shaders and OpenGL program
-        vertexShader = MyGLRenderer.loadShader(
-                GLES20.GL_VERTEX_SHADER, vertex_shader);
-        fragmentShader = MyGLRenderer.loadShader(
-                GLES20.GL_FRAGMENT_SHADER, fragment_shader);
+        /*ss.vertexShader = MyGLRenderer.loadShader(
+                GLES20.GL_VERTEX_SHADER, ss.vertex_shader);
+        ss.fragmentShader = MyGLRenderer.loadShader(
+                GLES20.GL_FRAGMENT_SHADER, ss.fragment_shader);
 
-        mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
-        GLES20.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
-        GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
+        ss.mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
+        GLES20.glAttachShader(ss.mProgram, ss.vertexShader);   // add the vertex shader to program
+        GLES20.glAttachShader(ss.mProgram, ss.fragmentShader); // add the fragment shader to program
+        GLES20.glLinkProgram(ss.mProgram);                  // create OpenGL program executables*/
 
         alpha = 1.0f;
         light_pos = new float[]{0.0f, 0.0f, 4.0f, 1.0f};
@@ -172,12 +176,25 @@ public class GLObject {
         mPositionX = 0.0f;
         mPositionY = 0.0f;
         mPositionZ = 0.0f;
-
+        light_strength = 40.0f;
+        //initLocations();
         isInit=true;
 
     }
     public void draw(float[] vMatrix, float[] pMatrix, LatLng current) {
     }
+
+    /*public void initLocations(){
+        ss.mLightHandle = GLES20.glGetUniformLocation (ss.mProgram, "u_LightPos");
+        ss.mTextureUniformHandle = GLES20.glGetUniformLocation(ss.mProgram, "s_texture");
+        ss.mMVPMatrixHandle = GLES20.glGetUniformLocation(ss.mProgram, "u_MVPMatrix");
+        ss.mMMatrixHandle = GLES20.glGetUniformLocation (ss.mProgram, "u_MVMatrix");
+        ss.mAlphaHandle = GLES20.glGetUniformLocation (ss.mProgram, "u_Alpha");
+        ss.mColorHandle = GLES20.glGetUniformLocation(ss.mProgram, "a_Color");
+        ss.mPositionHandle = GLES20.glGetAttribLocation(ss.mProgram, "a_Position");
+        ss.mNormalHandle = GLES20.glGetAttribLocation(ss.mProgram,   "a_Normal");
+        ss.mTexHandle = GLES20.glGetAttribLocation(ss.mProgram,   "vTexture");
+    }*/
 
     public void standard_draw(float[] vMatrix, float[] pMatrix ) {
         float[] view_light = new float[4];
@@ -186,15 +203,6 @@ public class GLObject {
         normalBuffer.position(0);
         vertexBuffer.position(0);
 
-        mLightHandle = GLES20.glGetUniformLocation (mProgram, "u_LightPos");
-        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "s_texture");
-        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
-        mMMatrixHandle = GLES20.glGetUniformLocation (mProgram, "u_MVMatrix");
-        mAlphaHandle = GLES20.glGetUniformLocation (mProgram, "u_Alpha");
-        mColorHandle = GLES20.glGetUniformLocation(mProgram, "a_Color");
-        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
-        mNormalHandle = GLES20.glGetAttribLocation(mProgram,   "a_Normal");
-        mTexHandle = GLES20.glGetAttribLocation(mProgram,   "vTexture");
 
 
         GLES20.glEnable(GLES20.GL_BLEND);
@@ -205,49 +213,50 @@ public class GLObject {
         Matrix.multiplyMM(this.mVPMatrix, 0, pMatrix, 0, vMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mVPMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMVMatrix, 0, vMatrix, 0, mModelMatrix, 0);
-        GLES20.glUseProgram(mProgram);
+        GLES20.glUseProgram(ss.mProgram);
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
 
-        GLES20.glUniform1i(mTextureUniformHandle, 0);
+        GLES20.glUniform1i(ss.mTextureUniformHandle, 0);
 
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        GLES20.glEnableVertexAttribArray(ss.mPositionHandle);
         GLES20.glVertexAttribPointer(
-                mPositionHandle, COORDS_PER_VERTEX,
+                ss.mPositionHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
                 vertexStride, vertexBuffer);
 
-        GLES20.glEnableVertexAttribArray(mNormalHandle);
+        GLES20.glEnableVertexAttribArray(ss.mNormalHandle);
         GLES20.glVertexAttribPointer(
-                mNormalHandle, COORDS_PER_VERTEX,
+                ss.mNormalHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
                 vertexStride, normalBuffer);
 
-        GLES20.glEnableVertexAttribArray(mTexHandle);
+        GLES20.glEnableVertexAttribArray(ss.mTexHandle);
         GLES20.glVertexAttribPointer(
-                mTexHandle, TEX_COORDS_PER_VERTEX,
+                ss.mTexHandle, TEX_COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
                 8, textureBuffer);
 
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+        GLES20.glUniformMatrix4fv(ss.mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
         MyGLRenderer.checkGlError("glUniformMatrix4fv");
-        GLES20.glUniformMatrix4fv(mMMatrixHandle, 1, false, mMVMatrix, 0);
+        GLES20.glUniformMatrix4fv(ss.mMMatrixHandle, 1, false, mMVMatrix, 0);
         MyGLRenderer.checkGlError("glUniformMatrix4fv");
-        GLES20.glUniform3fv(mLightHandle,1, view_light,0);
+        GLES20.glUniform3fv(ss.mLightHandle,1, view_light,0);
         MyGLRenderer.checkGlError("glUniform3fv");
-        GLES20.glUniform1f(mAlphaHandle, alpha);
+        GLES20.glUniform1f(ss.mAlphaHandle, alpha);
         MyGLRenderer.checkGlError("glUniform1f");
-
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+        GLES20.glUniform1f(ss.mLightStrengthHandle, light_strength);
+        MyGLRenderer.checkGlError("glUniform1f");
+        GLES20.glUniform4fv(ss.mColorHandle, 1, color, 0);
         MyGLRenderer.checkGlError("glUniform4fv");
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
 
-        GLES20.glDisableVertexAttribArray(mPositionHandle);
-        GLES20.glDisableVertexAttribArray(mTexHandle);
-        GLES20.glDisableVertexAttribArray(mNormalHandle);
+        GLES20.glDisableVertexAttribArray(ss.mPositionHandle);
+        GLES20.glDisableVertexAttribArray(ss.mTexHandle);
+        GLES20.glDisableVertexAttribArray(ss.mNormalHandle);
         GLES20.glUseProgram(0);
         GLES20.glDisable(GLES20.GL_BLEND);
     }

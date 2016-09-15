@@ -4,6 +4,7 @@ import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Building;
 import com.example.android.opengl.OSM.Node;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.SessionData;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -17,7 +18,8 @@ public class Star extends GLObject {
     private boolean fading = false;
     private float extra_rotation = 50.0f;
 
-    public Star(String uid, double lat, double longi, Date creation_time) {
+    public Star(String uid,double lat, double longi, Date creation_time) {
+        super(null);
         this.uid = uid;
         this.relativePoint = new LatLng(lat,longi);
         this.creation_time = creation_time;

@@ -1,5 +1,7 @@
 package com.example.android.opengl.OpenGL.GLobjects;
 
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
+
 /**
  * Created by Woess on 06.09.2016.
  */

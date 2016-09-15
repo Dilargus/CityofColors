@@ -26,6 +26,7 @@ import com.example.android.opengl.OpenGL.GLobjects.Eyeball;
 import com.example.android.opengl.OpenGL.GLobjects.Floor;
 import com.example.android.opengl.OpenGL.GLobjects.GLObject;
 import com.example.android.opengl.OpenGL.GLobjects.ObjectHolder;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.GLobjects.Square;
 import com.example.android.opengl.OpenGL.GLobjects.Star;
 import com.example.android.opengl.OpenGL.GLobjects.Triangle;
@@ -71,6 +72,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private float traveled = 0.0f;
     private double distance = 1.0f;
     private ObjectHolder star;
+    private FPSCounter fpsc;
+    private StandardShader ss;
     public MyGLRenderer(Context context) {
         super();
         this.my_context = context;
@@ -82,7 +85,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-
+        fpsc = new FPSCounter();
+        ss = new StandardShader();
+        ss.init();
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -90,7 +95,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         //mSquare   = new Square();
         mAngle = 0.0f;
         //atrix.setLookAtM(mViewMatrix, 0, 0, 0, 0.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-        floor = new Floor();
+        floor = new Floor(ss);
         //0, 4, 0, 7f, 0f, 0f, 0f, 0f, 1.0f, 0f);
         Matrix.setLookAtM(mViewMatrix, 0, 4, 0, 8f, 0f, 0f, 0f, 0f, 1.0f, 0f);
         //loadTexture("white_wall");
@@ -108,7 +113,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         try {
             ObjectHolder objh = obj_loader.loadModel("eye");
-            eye = new Eyeball(objh.vertices,objh.texture_coords);
+            eye = new Eyeball(ss,objh.vertices,objh.texture_coords);
             eye.texture = textureid[3];
 
         } catch (IOException e) {
@@ -117,6 +122,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         try {
             star = obj_loader.loadModel("star");
             star.texture = textureid[4];
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,6 +134,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 unused) {
+        fpsc.logFrame();
         if(SessionData.instance().approx_location != null && end!=null) {
             if(SessionData.distance(end,SessionData.instance().approx_location)> 0.00005 ){
                 traveled =0.0f;
@@ -179,25 +186,33 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             for (int i = 0; i < SessionData.instance().current_buildings.size(); i++) {
                 if(SessionData.instance().current_buildings.get(i).my_glbuilding != null) {
                     //Log.i("TESTBUILDING ID","i "+i+" "+ SessionData.instance().current_buildings.get(i).getId()+"");
+                    if(SessionData.instance().current_buildings.get(i).my_glbuilding.ss == null){
+                        SessionData.instance().current_buildings.get(i).my_glbuilding.ss = ss;
+                    }
                     SessionData.instance().current_buildings.get(i).my_glbuilding.draw(mViewMatrix, mProjectionMatrix, textureid[0], current_gl_location);
                 }
             }
-            for (int i = 0; i < SessionData.instance().current_streets.size(); i++) {
+            /*for (int i = 0; i < SessionData.instance().current_streets.size(); i++) {
                 //Log.i("TESTSTREET ID","size "+SessionData.instance().current_streets.size());
 
                 if(SessionData.instance().current_streets.get(i).my_glstreet != null) {
+                    if(SessionData.instance().current_streets.get(i).my_glstreet.ss == null){
+                        SessionData.instance().current_streets.get(i).my_glstreet.ss = ss;
+                    }
                     //Log.i("TESTSTREET ID","i "+i+" "+ SessionData.instance().current_streets.get(i).getId()+"");
                     SessionData.instance().current_streets.get(i).my_glstreet.draw(mViewMatrix, mProjectionMatrix, current_gl_location);
                 }
-            }
+            }*/
             for (Map.Entry<String, GLObject> entry : SessionData.instance().current_things.entrySet())
             {
                 GLObject thing = entry.getValue();
                 if(thing != null) {
                     if(thing.getCoordinates() == null && thing instanceof Star){
+                        thing.ss = ss;
                         ((Star) thing).setGLCoords(star.vertices,star.texture_coords,star.normals, star.texture);
                     }
                     if(thing instanceof Crate && thing.texture ==null){
+                        thing.ss = ss;
                         thing.texture = textureid[2];
                     }
                     thing.draw(mViewMatrix, mProjectionMatrix, current_gl_location);

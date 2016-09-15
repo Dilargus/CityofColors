@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Building;
 import com.example.android.opengl.OSM.Node;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.MyGLRenderer;
 import com.example.android.opengl.SessionData;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,11 +29,12 @@ public class Crate extends GLObject {
     private final float SCALE = 0.25f;
 
     public Crate(String uid, double lat, double longi, Date creation_time) {
+        super(null);
         this.uid = uid;
         this.relativePoint = new LatLng(lat,longi);
         this.creation_time = creation_time;
 
-        vertex_shader =
+        /*vertex_shader =
                 "uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
                         + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.
                         + "uniform vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
@@ -72,7 +74,7 @@ public class Crate extends GLObject {
                         //               + "	  vec4 col = v_Color  \n"
                         //             + "   gl_FragColor = vec4(v_Color[0]* diffuse * 10.0,v_Color[1]* diffuse * 10.0,v_Color[2]* diffuse * 10.0, u_Alpha);     \n"
                         + "   gl_FragColor = vec4(v_Color[0]*text.r * diffuse,v_Color[1]*text.g * diffuse ,v_Color[2]*text.b * diffuse, u_Alpha);     \n"		// Pass the color directly through the pipeline.
-                        + "}                              \n";
+                        + "}                              \n";*/
     }
 
     public float[] getModelMatrix(){
@@ -285,7 +287,7 @@ public class Crate extends GLObject {
         makeBufferReady();
 
         // prepare shaders and OpenGL program
-        vertexShader = MyGLRenderer.loadShader(
+        /*vertexShader = MyGLRenderer.loadShader(
                 GLES20.GL_VERTEX_SHADER, vertex_shader);
         fragmentShader = MyGLRenderer.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, fragment_shader);
@@ -293,7 +295,7 @@ public class Crate extends GLObject {
         mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
         GLES20.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
         GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
+        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables*/
 
         alpha = 1.0f;
         light_pos = new float[]{0.0f, 0.0f, 4.0f, 1.0f};
@@ -302,10 +304,11 @@ public class Crate extends GLObject {
         mVPMatrix = new float[16];
         mPositionX = 0.0f;
         mPositionY = 0.0f;
+        light_strength = 10.0f;
         Random rn = new Random();
         float add_height = rn.nextFloat();
         mPositionZ = 10.0f + add_height;
-
+        //initLocations();
         isInit=true;
 
     }

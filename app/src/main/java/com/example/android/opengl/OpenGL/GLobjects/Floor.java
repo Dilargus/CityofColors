@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Node;
 import com.example.android.opengl.OSM.OSMManager;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.MyGLRenderer;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -51,7 +52,7 @@ public class Floor extends GLObject{
     static final int FLOOR_SIZE = 10;
     //private int vertexCount;
 
-    private final String floor_vertex_shader =
+    /*private final String floor_vertex_shader =
                       "uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
                     + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.
                     + "uniform vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
@@ -94,10 +95,11 @@ public class Floor extends GLObject{
                     + "   gl_FragColor = vec4(text.r,text.g,text.b, u_Alpha);     \n"
        //             + "   gl_FragColor = vec4(v_Color[0]* diffuse * 10.0,v_Color[1]* diffuse * 10.0,v_Color[2]* diffuse * 10.0, u_Alpha);     \n"
                     + "   gl_FragColor = vec4(text.r * diffuse,text.g * diffuse ,text.b * diffuse, u_Alpha);     \n"		// Pass the color directly through the pipeline.
-                    + "}                              \n";
+                    + "}                              \n";*/
 
-    public Floor() {
+    public Floor(StandardShader ss) {
         // initialize vertex byte buffer for shape coordinates
+        super(ss);
         this.relativePoint = new LatLng(-FLOOR_SIZE,-FLOOR_SIZE);
     }
     public void init(){
@@ -136,10 +138,9 @@ public class Floor extends GLObject{
             gl_normals[i+2] = 1.0f;
         }
 
-        makeBufferReady();
 
         // prepare shaders and OpenGL program
-        vertexShader = MyGLRenderer.loadShader(
+        /*vertexShader = MyGLRenderer.loadShader(
                 GLES20.GL_VERTEX_SHADER, floor_vertex_shader);
         fragmentShader = MyGLRenderer.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, floor_fragment_shader);
@@ -147,15 +148,14 @@ public class Floor extends GLObject{
         mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
         GLES20.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
         GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
+        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables*/
 
-        alpha = 1.0f;
-        light_pos = new float[]{0.0f, 0.0f, 4.0f, 1.0f};
-        color = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
-        mMVMatrix = new float[16];
-        mVPMatrix = new float[16];
+
+        //initLocations();
+
+        super.init();
+        light_strength = 20.0f;
         isInit=true;
-
     }
 
     public void draw(float[] vMatrix, float[] pMatrix, int texture_nr) {

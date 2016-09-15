@@ -75,6 +75,32 @@ public int server_difference;
 		return Math.sqrt((p1.latitude - p2.latitude)*(p1.latitude - p2.latitude)*GPS_FACTOR +
 				(p1.longitude - p2.longitude)*(p1.longitude - p2.longitude) );
 	}
+
+	public int calcMinDif(int col, int col2){
+		int dif1 = (col+100-col2)%100;
+		int dif2 = (col2+100-col)%100;
+		int dif;
+		if(Math.abs(dif1)>Math.abs(dif2)){
+			dif = dif2;
+		}
+		else{
+			dif = dif1*(-1);
+		}
+		return dif;
+	}
+
+	public int getRasInteger(){
+		return  Integer.valueOf( hex_color.substring( 2, 4 ), 16 )*100/255;
+	}
+	public int getGasInteger(){
+		return  Integer.valueOf( hex_color.substring( 4, 6 ), 16 )*100/255;
+	}
+	public int getBasInteger(){
+		return Integer.valueOf( hex_color.substring( 6, 8 ), 16 )*100/255;
+	}
+
 }
+
+
 
 

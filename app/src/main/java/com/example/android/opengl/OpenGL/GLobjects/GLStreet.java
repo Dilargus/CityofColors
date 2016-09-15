@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.example.android.opengl.OSM.Node;
+import com.example.android.opengl.OpenGL.GLobjects.Shader.StandardShader;
 import com.example.android.opengl.OpenGL.MyGLRenderer;
 import com.example.android.opengl.SessionData;
 import com.example.android.opengl.OSM.Street;
@@ -60,6 +61,7 @@ public class GLStreet extends  GLObject{
                     + "}                              \n";
 
     public GLStreet(Street street, float[] vertices, float[] normals, LatLng relativePoint) {
+        super(null);
         this.my_street = street;
         // initialize vertex byte buffer for shape coordinates
         this.relativePoint = relativePoint;
@@ -90,7 +92,7 @@ public class GLStreet extends  GLObject{
         normalBuffer.put(gl_normals);
 
         // prepare shaders and OpenGL program
-        vertexShader = MyGLRenderer.loadShader(
+        /*vertexShader = MyGLRenderer.loadShader(
                 GLES20.GL_VERTEX_SHADER, building_vertex_shader);
         fragmentShader = MyGLRenderer.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, building_fragment_shader);
@@ -98,13 +100,21 @@ public class GLStreet extends  GLObject{
         mProgram = GLES20.glCreateProgram();             // create empty OpenGL Program
         GLES20.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
         GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
+        GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables*/
 
         alpha = 0.5f;
         light_pos = new float[]{0.0f, 0.0f, 4.0f, 1.0f};
         color = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
         mMVMatrix = new float[16];
         mVPMatrix = new float[16];
+
+        /*mLightHandle = GLES20.glGetUniformLocation (mProgram, "u_LightPos");
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
+        mMMatrixHandle = GLES20.glGetUniformLocation (mProgram, "u_MVMatrix");
+        mAlphaHandle = GLES20.glGetUniformLocation (mProgram, "u_Alpha");
+        mColorHandle = GLES20.glGetUniformLocation(mProgram, "a_Color");
+        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
+        mNormalHandle = GLES20.glGetAttribLocation(mProgram,   "a_Normal");*/
         isInit=true;
 
     }
@@ -119,13 +129,6 @@ public class GLStreet extends  GLObject{
         vertexBuffer.position(0);
 
 
-        mLightHandle = GLES20.glGetUniformLocation (mProgram, "u_LightPos");
-        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
-        mMMatrixHandle = GLES20.glGetUniformLocation (mProgram, "u_MVMatrix");
-        mAlphaHandle = GLES20.glGetUniformLocation (mProgram, "u_Alpha");
-        mColorHandle = GLES20.glGetUniformLocation(mProgram, "a_Color");
-        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
-        mNormalHandle = GLES20.glGetAttribLocation(mProgram,   "a_Normal");
 
 
         GLES20.glEnable(GLES20.GL_BLEND);
@@ -152,7 +155,7 @@ public class GLStreet extends  GLObject{
         Matrix.multiplyMM(mMVPMatrix, 0, mVPMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMVMatrix, 0, vMatrix, 0, mModelMatrix, 0);
 
-        GLES20.glUseProgram(mProgram);
+       /* GLES20.glUseProgram(mProgram);
 
 
         GLES20.glEnableVertexAttribArray(mPositionHandle);
@@ -185,9 +188,9 @@ public class GLStreet extends  GLObject{
         GLES20.glDisableVertexAttribArray(mNormalHandle);
         GLES20.glUseProgram(0);
         GLES20.glDisable(GLES20.GL_BLEND);
-    }
+    */}
 
-    public boolean contains(Node test) {
+    /*public boolean contains(Node test) {
         int i;
         int j;
         boolean result = false;
@@ -198,5 +201,5 @@ public class GLStreet extends  GLObject{
             }
         }
         return result;
-    }
+    }*/
 }

@@ -259,6 +259,14 @@ public class OSMManager extends BroadcastReceiver{
 				grid.buildings.get(a).g = rnd.nextFloat();
 				grid.buildings.get(a).b = rnd.nextFloat();
 				grid.buildings.get(a).height = (rnd.nextFloat()+0.1f)*3.0f;
+
+				grid.buildings.get(a).cost = 	(int)(grid.buildings.get(a).area) +
+												(int) (grid.buildings.get(a).height/2) +
+												grid.buildings.get(a).getNodes().size() +
+													(Math.abs(SessionData.instance().calcMinDif(SessionData.instance().getRasInteger(),(int)(100*grid.buildings.get(a).r)))+
+													 Math.abs(SessionData.instance().calcMinDif(SessionData.instance().getGasInteger(),(int)(100*grid.buildings.get(a).g))) +
+													 Math.abs(SessionData.instance().calcMinDif(SessionData.instance().getBasInteger(),(int)(100*grid.buildings.get(a).b))))/10 +
+													 rnd.nextInt(20);
 			}
 		}
 		processBuildings(grid.buildings);
