@@ -4,32 +4,35 @@
     api-level="23"
     density="xhdpi"
     format="7"
-    timestamp="277505252293600"
+    timestamp="550113437120632"
     token="-3812740555259977275" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="837" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="124" />
     <task
         name="verifier"
-        duration="0" />
+        duration="23" />
 
-    <build timestamp="277220252446295" >
+    <artifact
+        location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
+        type="DEX" />
+
+    <build timestamp="549238676028498" >
         <artifact
             location="C:\Users\Woess\HelloOpenGLES20\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
-    <build timestamp="277496613304536" >
+    <build timestamp="550113437120632" >
         <artifact
             location="C:\Users\Woess\HelloOpenGLES20\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
             type="DEX" />
     </build>
-    <build timestamp="277505252293600" />
 
 </instant-run>

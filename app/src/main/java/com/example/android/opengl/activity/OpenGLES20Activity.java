@@ -120,6 +120,7 @@ public class OpenGLES20Activity extends Activity {
     protected int timer_counter=0;
     protected int item_selection_timer = 0;
     protected boolean item_selectable = false;
+    protected boolean rotate_view = false;
 
     protected ImageButton rot_left_btn;
     protected ImageButton rot_right_btn;
@@ -188,7 +189,7 @@ public class OpenGLES20Activity extends Activity {
             File dirFiles = this.getBaseContext().getFilesDir();
             for (String strFile : dirFiles.list())
             {
-
+                Log.i("ONCREATE",strFile);
                 if(strFile.startsWith("grid")) {
                     FileInputStream fis;
                     fis = openFileInput(strFile);
@@ -196,7 +197,8 @@ public class OpenGLES20Activity extends Activity {
                     SingleGrid grid = (SingleGrid) is.readObject();
                     SessionData.instance().grid.put(strFile, grid);
                     osm_manager.downloaded_list.add(strFile);
-                    osm_manager.sendNewSection(grid);
+                    //osm_manager.sendNewSection(grid);
+                    osm_manager.getBuildingInformation(grid);
                     is.close();
                     fis.close();
                 }
@@ -250,13 +252,24 @@ public class OpenGLES20Activity extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(timer_counter < item_selection_timer){
-                                    timer_counter++;
-                                    updateList();
+                                if(SessionData.instance().approx_location!=null) {
+                                    osm_manager.refreshEnvironment();
                                 }
-                                else if(timer_counter >= item_selection_timer && timer_counter!= 0){
-                                    mLayoutManager.setScrollEnabled(false);
-                                    item_selectable = true;
+                                if(rotate_view) {
+                                    if (timer_counter < item_selection_timer) {
+                                        timer_counter++;
+                                        if(list_cursor>=9+5){
+                                            list_cursor = 0;
+                                            recyclerView.scrollToPosition(list_cursor);
+                                            list_cursor = 3;
+                                        }
+                                        list_cursor++;
+                                        recyclerView.smoothScrollToPosition(list_cursor);
+                                    } else if (timer_counter >= item_selection_timer && timer_counter != 0) {
+                                        mLayoutManager.setScrollEnabled(false);
+                                        item_selectable = true;
+                                        rotate_view = false;
+                                    }
                                 }
                             }
                         });
@@ -289,27 +302,9 @@ public class OpenGLES20Activity extends Activity {
     }
 
 
-
-    public void updateList(){
-
-        if(list_cursor>=9+5){
-            list_cursor = 0;
-            recyclerView.scrollToPosition(list_cursor);
-            list_cursor = 3;
-
-        }
-
-        list_cursor++;
-        recyclerView.smoothScrollToPosition(list_cursor);
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
-        // The following call pauses the rendering thread.
-        // If your OpenGL application is memory intensive,
-        // you should consider de-allocating objects that
-        // consume significant memory here.
         unregisterReceiver(osm_manager);
         if(mGLView!=null) {
             mGLView.onPause();
@@ -319,9 +314,6 @@ public class OpenGLES20Activity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        // The following call resumes a paused rendering thread.
-        // If you de-allocated graphic objects for onPause()
-        // this is a good place to re-allocate them.
         registerReceiver(osm_manager, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         if(mGLView!=null) {
             mGLView.onResume();
@@ -374,12 +366,12 @@ public class OpenGLES20Activity extends Activity {
             //accuracy_text.setText(String.format("%02d", (int) accuracy));
             //accuracy_circle.setColor(Color.argb(200, color, 255-color, 0));
 
-            lowPassGPS(SessionData.BAD_ACCURACY, percent, cur_loc);
+            lowPassGPS(accuracy, percent, cur_loc);
 
             //TODOJNILibrary.setCurPosition(approx_location.latitude,approx_location.longitude);
 
-            osm_manager.refreshEnvironment(SessionData.instance().approx_location);
-            Log.i("gspcounter", "" + mysqlcounter);
+            //osm_manager.refreshEnvironment(SessionData.instance().approx_location);
+            //Log.i("gspcounter", "" + mysqlcounter);
             if(mysqlcounter > 40) {
 
                 sqlh.sendGPS();
@@ -392,8 +384,10 @@ public class OpenGLES20Activity extends Activity {
 
                 Date d1 = thing.getCreationTime();
                 long diff =    d1.getTime() + (long)(SessionData.instance().server_difference*3600000)- d2.getTime();
-                Log.i("Cratetimer" ,thing.uid +" " + diff );
+                //Log.i("Cratetimer" ,thing.uid +" " + diff );
                 if(diff < 0){
+                    Random rnd = new Random();
+                    thing.relativePoint = new LatLng(SessionData.instance().approx_location.latitude + (rnd.nextDouble()-0.5)*0.002,SessionData.instance().approx_location.longitude + (rnd.nextDouble()-0.5)*0.002);
                     SessionData.instance().current_things.put(thing.uid,thing);
                     SessionData.instance().waiting_things.remove(thing.uid);
                 }
@@ -429,8 +423,8 @@ public class OpenGLES20Activity extends Activity {
     }
 
     private void lowPassGPS(float accuracy, int percent, LatLng current_location) {
-        /*if(SessionData.instance().old_location!=null) {
-            current_location = new LatLng(SessionData.instance().old_location.latitude + 0.001, SessionData.instance().old_location.longitude + 0.001);
+       /* if(SessionData.instance().old_location!=null) {
+            current_location = new LatLng(SessionData.instance().old_location.latitude + 0.0005, SessionData.instance().old_location.longitude + 0.0005);
         }*/
         if (SessionData.instance().old_location != null) {
             LatLng last_save = new LatLng(SessionData.instance().approx_location.latitude, SessionData.instance().approx_location.longitude);
@@ -449,6 +443,7 @@ public class OpenGLES20Activity extends Activity {
             mGLView.getRenderer().start = SessionData.instance().approx_location;
             mGLView.getRenderer().end = SessionData.instance().approx_location;
         }
+        SessionData.instance().accuracy = accuracy;
     }
 
 

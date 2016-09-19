@@ -28,10 +28,9 @@ public class Crate extends GLObject {
     private float rotation = 0.0f;
     private final float SCALE = 0.25f;
 
-    public Crate(String uid, double lat, double longi, Date creation_time) {
+    public Crate(String uid, Date creation_time) {
         super(null);
         this.uid = uid;
-        this.relativePoint = new LatLng(lat,longi);
         this.creation_time = creation_time;
 
         /*vertex_shader =
@@ -304,7 +303,7 @@ public class Crate extends GLObject {
         mVPMatrix = new float[16];
         mPositionX = 0.0f;
         mPositionY = 0.0f;
-        light_strength = 10.0f;
+        light_strength = 8.0f;
         Random rn = new Random();
         float add_height = rn.nextFloat();
         mPositionZ = 10.0f + add_height;

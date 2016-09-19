@@ -300,10 +300,9 @@ public class SQLHelper {
                     // Check for error node in json
                     if (!error) {
 
-                        for(int i = 0; i<(jObj.names().length()-1)/4; i=i+1){
+                        for(int i = 0; i<(jObj.names().length())/3; i=i+1){
                             String unique_id = jObj.getString("unique_id"+i);
-                            String latitude = jObj.getString("latitude"+i);
-                            String longitude = jObj.getString("longitude"+i);
+                            String crate_type = jObj.getString("crate_type"+i);
                             String creation_date = jObj.getString("creation_date"+i);
                             //Log.i("RECEIVED CRATE", unique_id + " " + latitude + " " + longitude);
                             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -313,15 +312,15 @@ public class SQLHelper {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (!SessionData.instance().waiting_things.containsKey(unique_id) && !SessionData.instance().current_things.containsKey(unique_id) && unique_id != "null" && latitude != "null" && longitude != "null" && creation!=null) {
+                            if (!SessionData.instance().waiting_things.containsKey(unique_id) && !SessionData.instance().current_things.containsKey(unique_id) && unique_id != "null" &&  crate_type != "null" && creation!=null) {
                                 Random rnd = new Random();
                                 int type_of_things = rnd.nextInt(10);
-                                if(type_of_things<4){
-                                    Star star = new Star(unique_id, Double.valueOf(latitude), Double.valueOf(longitude), creation);
+                                if(Integer.valueOf(crate_type)<2){
+                                    Star star = new Star(unique_id, creation);
                                     SessionData.instance().waiting_things.put(unique_id,star);
                                 }
                                 else{
-                                    Crate crate = new Crate(unique_id, Double.valueOf(latitude), Double.valueOf(longitude), creation);
+                                    Crate crate = new Crate(unique_id, creation);
                                     SessionData.instance().waiting_things.put(unique_id,crate);
                                 }
 
@@ -357,8 +356,8 @@ public class SQLHelper {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("latitude", String.valueOf(SessionData.instance().approx_location.latitude));
-                params.put("longitude",  String.valueOf(SessionData.instance().approx_location.longitude));
+                Log.i("UID TEST", String.valueOf(SessionData.instance().user_id));
+                params.put("uid", String.valueOf(SessionData.instance().user_id));
                 return params;
             }
 

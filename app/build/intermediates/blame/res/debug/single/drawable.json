@@ -56,12 +56,12 @@
         "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable\\abc_seekbar_track_material.xml"
     },
     {
-        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\floor.jpg",
-        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\drawable\\floor.jpg"
-    },
-    {
         "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mblue30.png",
         "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\drawable\\mblue30.png"
+    },
+    {
+        "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\floor.jpg",
+        "source": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\src\\main\\res\\drawable\\floor.jpg"
     },
     {
         "merged": "C:\\Users\\Woess\\HelloOpenGLES20\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\border.png",

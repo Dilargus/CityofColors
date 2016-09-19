@@ -285,6 +285,7 @@ public class OnClickHelper {
             if(result.hit instanceof Crate && result.type == 1){
                 act.makeNewCrateItems();
                 act.recyclerView.setVisibility(View.VISIBLE);
+                act.rotate_view = true;
             }
         }
 

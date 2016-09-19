@@ -26,12 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionData {
 	private static SessionData instance;
 
-	public static final long INTERVAL = 100 * 14;
-	public static final long FASTEST_INTERVAL = 100 * 8;
+	public static final long INTERVAL = 100 * 18;
+	public static final long FASTEST_INTERVAL = 100 * 10;
 	public static final float BAD_ACCURACY = 40.0f;
 	public static final int GPS_FACTOR_LAT = 12000;
 	public static final int GPS_FACTOR_LONG = 10000;
-	public static final int GPS_FACTOR = GPS_FACTOR_LAT*GPS_FACTOR_LAT/(GPS_FACTOR_LONG*GPS_FACTOR_LONG);
+	public static final int GPS_FACTOR = GPS_FACTOR_LAT/GPS_FACTOR_LONG;
 
 
 	public HashMap<String, SingleGrid> grid = new HashMap<String, SingleGrid>();
@@ -61,6 +61,7 @@ public class SessionData {
 	public String hex_color;
 	public LatLng approx_location;
 	public LatLng old_location;
+	public float accuracy;
 public int server_difference;
     public static SessionData instance()
     {
@@ -72,8 +73,8 @@ public int server_difference;
     }
     
     public static double distance(LatLng p1, LatLng p2){
-		return Math.sqrt((p1.latitude - p2.latitude)*(p1.latitude - p2.latitude)*GPS_FACTOR +
-				(p1.longitude - p2.longitude)*(p1.longitude - p2.longitude) );
+		return Math.sqrt((p1.latitude - p2.latitude)*(p1.latitude - p2.latitude) +
+				(p1.longitude - p2.longitude)*(p1.longitude - p2.longitude)*GPS_FACTOR );
 	}
 
 	public int calcMinDif(int col, int col2){

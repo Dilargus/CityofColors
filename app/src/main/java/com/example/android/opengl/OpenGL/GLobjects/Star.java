@@ -18,12 +18,10 @@ public class Star extends GLObject {
     private boolean fading = false;
     private float extra_rotation = 50.0f;
 
-    public Star(String uid,double lat, double longi, Date creation_time) {
+    public Star(String uid, Date creation_time) {
         super(null);
         this.uid = uid;
-        this.relativePoint = new LatLng(lat,longi);
         this.creation_time = creation_time;
-
     }
 
     public float[] getModelMatrix(){

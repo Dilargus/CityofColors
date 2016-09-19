@@ -20,9 +20,6 @@ import java.util.ArrayList;
  * Created by Woess on 03.08.2016.
  */
 public class GLBuilding extends  GLObject{
-    private float[] coords;
-    private float[] normals;
-    private float[] tex_coords;
     public Building my_building;
 
     /*private final String building_vertex_shader =
@@ -73,9 +70,9 @@ public class GLBuilding extends  GLObject{
         this.my_building = my_building;
         // initialize vertex byte buffer for shape coordinates
         this.relativePoint = relativePoint;
-        coords = vertices;
-        this.tex_coords = tex_coords;
-        this.normals = normals;
+        gl_coords = vertices;
+        gl_tex_coords = tex_coords;
+        gl_normals = normals;
         this.color = new float[] {my_building.r,my_building.g,my_building.b,1.0f};
     }
     public float[] getCoords(){
@@ -95,8 +92,8 @@ public class GLBuilding extends  GLObject{
     }
 
     public void init(){
-        vertexCount = coords.length / COORDS_PER_VERTEX;
-        gl_coords = new float[coords.length];
+        vertexCount = gl_coords.length / COORDS_PER_VERTEX;
+        /*gl_coords = new float[coords.length];
         gl_coords = coords.clone();
         coords = null;
 
@@ -106,7 +103,7 @@ public class GLBuilding extends  GLObject{
 
         gl_normals = new float[normals.length];
         gl_normals = normals.clone();
-        normals = null;
+        normals = null;*/
 
         makeBufferReady();
 

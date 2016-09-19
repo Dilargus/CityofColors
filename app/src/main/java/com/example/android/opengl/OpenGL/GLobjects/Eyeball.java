@@ -23,15 +23,15 @@ public class Eyeball extends GLObject {
         float factor = centrified(coords,0);
         for(int i=0; i<coords.length;i=i+3){
             gl_coords[i] = coords[i] + factor;
-            if(gl_coords[i]-0.01*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LAT > biggest_lat){
-                biggest_lat = gl_coords[i]-0.01*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LAT;
+            if(gl_coords[i]*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LAT > biggest_lat){
+                biggest_lat = gl_coords[i]*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LAT;
             }
         }
         factor = centrified(coords,1);
         for(int i=1; i<coords.length;i=i+3){
             gl_coords[i] = coords[i] + factor;
-            if(gl_coords[i]-0.01*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LONG > biggest_long){
-                biggest_long = gl_coords[i]-0.01*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LONG;
+            if(gl_coords[i]*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LONG > biggest_long){
+                biggest_long = gl_coords[i]*SCALE_FACTOR/(double)SessionData.GPS_FACTOR_LONG;
             }
         }
         factor = centrified(coords,2);

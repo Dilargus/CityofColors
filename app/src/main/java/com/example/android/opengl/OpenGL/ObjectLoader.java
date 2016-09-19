@@ -126,7 +126,7 @@ public class ObjectLoader {
 			triangles.add(polygon.get(0));
 			triangles.add(polygon.get(i));
 			triangles.add(polygon.get(i+1));
-			Log.i("TRIANGL", i +"");
+			//Log.i("TRIANGL", i +"");
 		}
 		return triangles;
 	}
@@ -136,9 +136,9 @@ public class ObjectLoader {
 		int c=tokens.length;
 
 		if(tokens[1].matches("[0-9]+")){//f: v
-			Log.i("OBJLOADER", "[0-9]+");
+			//Log.i("OBJLOADER", "[0-9]+");
 			if(c==4){//3 faces
-				Log.i("OBJLOADER", "3");
+				//Log.i("OBJLOADER", "3");
 				for(int i=1; i<c; i++){
 					Integer s=Integer.valueOf(tokens[i]);
 					s--;
@@ -146,7 +146,7 @@ public class ObjectLoader {
 				}
 			}
 			else{//more faces
-				Log.i("OBJLOADER", "more");
+				//Log.i("OBJLOADER", "more");
 				ArrayList<Integer> polygon=new ArrayList<Integer>();
 				for(int i=1; i<tokens.length; i++){
 					Integer s=Integer.valueOf(tokens[i]);
@@ -157,9 +157,9 @@ public class ObjectLoader {
 			}
 		}
 		if(tokens[1].matches("[0-9]+/[0-9]+")){//if: v/vt
-			Log.i("OBJLOADER", "[0-9]+/[0-9]+");
+			//Log.i("OBJLOADER", "[0-9]+/[0-9]+");
 			if(c==4){//3 faces
-				Log.i("OBJLOADER", "3");
+				//Log.i("OBJLOADER", "3");
 
 				for(int i=1; i<c; i++){
 					Integer s=Integer.valueOf(tokens[i].split("/")[0]);
@@ -171,7 +171,7 @@ public class ObjectLoader {
 				}
 			}
 			else{//triangulate
-				Log.i("OBJLOADER", "more");
+				//Log.i("OBJLOADER", "more");
 				ArrayList<Integer> tmpFaces=new ArrayList<Integer>();
 				ArrayList<Integer> tmpVt=new ArrayList<Integer>();
 				for(int i=1; i<tokens.length; i++){
@@ -181,16 +181,16 @@ public class ObjectLoader {
 					s=Integer.valueOf(tokens[i].split("/")[1]);
 					s--;
 					tmpVt.add(s);
-					Log.i("OBJLOADER", i+ " ...");
+					//Log.i("OBJLOADER", i+ " ...");
 				}
 				ind.addAll(triangulate(tmpFaces));
 				ind_u.addAll(triangulate(tmpVt));
 			}
 		}
 		if(tokens[1].matches("[0-9]+//[0-9]+")){//f: v//vn
-			Log.i("OBJLOADER", "[0-9]+//[0-9]+");
+			//Log.i("OBJLOADER", "[0-9]+//[0-9]+");
 			if(c==4){//3 faces
-				Log.i("OBJLOADER", "3");
+				//Log.i("OBJLOADER", "3");
 
 				for(int i=1; i<c; i++){
 					Integer s=Integer.valueOf(tokens[i].split("//")[0]);
@@ -199,7 +199,7 @@ public class ObjectLoader {
 				}
 			}
 			else{//triangulate
-				Log.i("OBJLOADER", "more");
+				//Log.i("OBJLOADER", "more");
 				ArrayList<Integer> tmpFaces=new ArrayList<Integer>();
 				for(int i=1; i<tokens.length; i++){
 					Integer s=Integer.valueOf(tokens[i].split("//")[0]);
@@ -210,9 +210,9 @@ public class ObjectLoader {
 			}
 		}
 		if(tokens[1].matches("[0-9]+/[0-9]+/[0-9]+")){//f: v/vt/vn
-			Log.i("OBJLOADER", "[0-9]+/[0-9]+/[0-9]+");
+			//Log.i("OBJLOADER", "[0-9]+/[0-9]+/[0-9]+");
 			if(c==4){//3 faces
-				Log.i("OBJLOADER", "3");
+				//Log.i("OBJLOADER", "3");
 
 				for(int i=1; i<c; i++){
 					Integer s=Integer.valueOf(tokens[i].split("/")[0]);
@@ -227,7 +227,7 @@ public class ObjectLoader {
 				}
 			}
 			else{//triangulate
-				Log.i("OBJLOADER", "more");
+				//Log.i("OBJLOADER", "more");
 				ArrayList<Integer> tmpFaces=new ArrayList<Integer>();
 				ArrayList<Integer> tmpVt=new ArrayList<Integer>();
 				ArrayList<Integer> tmpNt=new ArrayList<Integer>();
